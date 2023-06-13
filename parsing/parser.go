@@ -29,11 +29,49 @@ type Kubernetes struct {
 }
 
 type Annotations struct {
-	K8sOvnOrgPodNetworks         string `json:"k8s.ovn.org/pod-networks"`
-	K8sV1CniCncfIoNetworkStatus  string `json:"k8s.v1.cni.cncf.io/network-status"`
-	K8sV1CniCncfIoNetworksStatus string `json:"k8s.v1.cni.cncf.io/networks-status"`
+	K8sOvnOrgPodNetworks K8sOvnOrgPodNetworks `json:"k8s.ovn.org/pod-networks"`
+	K8sV1CniCncfIoNetworkStatus K8sV1CniCncfIoNetworkStatus `json:"k8s.v1.cni.cncf.io/network-status"`
+	K8sV1CniCncfIoNetworksStatus K8sV1CniCncfIoNetworksStatus `json:"k8s.v1.cni.cncf.io/networks-status"`
 	OpenshiftIoScc               string `json:"openshift.io/scc"`
 }
+
+type K8sOvnOrgPodNetworks struct {
+	Default Default
+}
+
+type Default struct {
+	IpAddresses []string `json:"ip_addresses"`
+	MacAddress  string   `json:"mac_address"`
+	GatewayIps  []string `json:"gateway_ips"`
+	IpAddress   string   `json:"ip_address"`
+	GatewayIp   string   `json:"gateway_ip"`
+}
+
+type K8sV1CniCncfIoNetworkStatus struct {
+	Name      string   `json:"name"`
+	Interface string   `json:"interface"`
+	Ips       []string `json:"ips"`
+	Mac       string   `json:"mac"`
+	Default   bool     `json:"default"`
+	Dns       Dns      `json:"dns"`
+}
+
+
+// need too add the dns struct and find examples of it!
+type Dns struct {
+}
+
+type K8sV1CniCncfIoNetworksStatus struct {
+	Name      string   `json:"name"`
+	Interface string   `json:"interface"`
+	Ips       []string `json:"ips"`
+	Mac       string   `json:"mac"`
+	Default   bool     `json:"default"`
+	Dns       Dns      `json:"dns"`
+}
+
+
+
 
 type Labels struct {
 	Run string
@@ -86,27 +124,5 @@ func main() {
 	// this initilizes the struct with the json data, and prints out whatever you want
 	var log Log
 	json.Unmarshal([]byte(logJson), &log)
-	fmt.Printf("The timestamp is: %s\n", log.Timestamp)
-	fmt.Printf("The file is: %s\n", log.File)
-	fmt.Printf("The hostname is: %s\n", log.Hostname)
-	fmt.Printf("The kubernetes container id is: %s\n", log.Kubernetes.ContainerId)
-	fmt.Printf("The kubernetes container image is: %s\n", log.Kubernetes.ContainerImage)
-	fmt.Printf("The kubernetes container name is: %s\n", log.Kubernetes.ContainerName)
-	fmt.Printf("The kubernetes namespace name is: %s\n", log.Kubernetes.NamespaceName)
-	fmt.Printf("The kubernetes pod id is: %s\n", log.Kubernetes.PodId)
-	fmt.Printf("The kubernetes pod ip is: %s\n", log.Kubernetes.PodIp)
-	fmt.Printf("The kubernetes pod name is: %s\n", log.Kubernetes.PodName)
-	fmt.Printf("The kubernetes annotation k8s.ovn.org/pod-networks is: %s\n", log.Kubernetes.Annotations.K8sOvnOrgPodNetworks)
-	fmt.Printf("The kubernetes annotation k8s.v1.cni.cncf.io/network-status is: %s\n", log.Kubernetes.Annotations.K8sV1CniCncfIoNetworkStatus)
-	fmt.Printf("The kubernetes annotation k8s.v1.cni.cncf.io/networks-status is: %s\n", log.Kubernetes.Annotations.K8sV1CniCncfIoNetworksStatus)
-	fmt.Printf("The kubernetes annotation openshift.io/scc is: %s\n", log.Kubernetes.Annotations.OpenshiftIoScc)
-	fmt.Printf("The kubernetes label run is: %s\n", log.Kubernetes.Labels.Run)
-	fmt.Printf("The kubernetes namespace label kubernetes.io/metadata.name is: %s\n", log.Kubernetes.NamespaceLabels.KubernetesIoMetadataName)
-	fmt.Printf("The kubernetes namespace label pod-security.kubernetes.io/audit is: %s\n", log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoAudit)
-	fmt.Printf("The kubernetes namespace label pod-security.kubernetes.io/audit-version is: %s\n", log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoAuditVersion)
-	fmt.Printf("The kubernetes namespace label pod-security.kubernetes.io/warn is: %s\n", log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoWarn)
-	fmt.Printf("The kubernetes namespace label pod-security.kubernetes.io/warn-version is: %s\n", log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoWarnVersion)
-	fmt.Printf("The log level is: %s\n", log.Level)
-	fmt.Printf("The log type is: %s\n", log.LogType)
-	fmt.Printf("The log message is: %s\n", log.Message)
+	fmt.Println(log.Kubernetes.Annotations.OpenshiftIoScc)
 }
