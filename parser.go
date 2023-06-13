@@ -6,7 +6,7 @@ import (
 )
 
 type Log struct {
-	Timestamp string
+	Timestamp string `json:"@timestamp"`
 	File string
 	Hostname string
 }
@@ -52,6 +52,6 @@ func main(){
 	
 	var log Log
 	json.Unmarshal([]byte(logJson), &log)
-	fmt.Println(log.Hostname)
+	fmt.Println(log.Timestamp)
 }
 
