@@ -9,7 +9,46 @@ type Log struct {
 	Timestamp string `json:"@timestamp"`
 	File string
 	Hostname string
+	Kubernetes Kubernetes
+	Level string
+	LogType string `json:"log_type"`
+	Message string
 }
+
+type Kubernetes struct {
+	Annotations Annotations
+	ContainerId string `json:"container_id"`
+	ContainerImage string `json:"container_image"`
+	ContainerName string `json:"container_name"`
+	Labels Labels
+	NamespaceLabels NamespaceLabels `json:"namespace_labels"`
+	NamespaceName string `json:"namespace_name"`
+	PodId string `json:"pod_id"`
+	PodIp string `json:"pod_ip"`
+	PodName string `json:"pod_name"`
+}
+
+type Annotations struct {
+	K8sOvnOrgPodNetworks string `json:"k8s.ovn.org/pod-networks"`
+	K8sV1CniCncfIoNetworkStatus string `json:"k8s.v1.cni.cncf.io/network-status"`
+	K8sV1CniCncfIoNetworksStatus string `json:"k8s.v1.cni.cncf.io/networks-status"`
+	OpenshiftIoScc string `json:"openshift.io/scc"`
+}
+
+type Labels struct {
+	Run string
+}
+
+type NamespaceLabels struct {
+	KubernetesIoMetadataName string `json:"kubernetes.io/metadata.name"`
+	PodSecurityKubernetesIoAudit string `json:"pod-security.kubernetes.io/audit"`
+	PodSecurityKubernetesIoAuditVersion string `json:"pod-security.kubernetes.io/audit-version"`
+	PodSecurityKubernetesIoWarn string `json:"pod-security.kubernetes.io/warn"`
+	PodSecurityKubernetesIoWarnVersion string `json:"pod-security.kubernetes.io/warn-version"`
+}
+
+
+
 
 func main(){
 	
@@ -52,6 +91,6 @@ func main(){
 	
 	var log Log
 	json.Unmarshal([]byte(logJson), &log)
-	fmt.Println(log.Timestamp)
+	fmt.Println(log.Kubernetes.Annotations.K8sOvnOrgPodNetworks)
 }
 
