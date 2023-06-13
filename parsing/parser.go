@@ -30,13 +30,13 @@ type Kubernetes struct {
 
 type Annotations struct {
 	K8sOvnOrgPodNetworks K8sOvnOrgPodNetworks `json:"k8s.ovn.org/pod-networks"`
-	K8sV1CniCncfIoNetworkStatus K8sV1CniCncfIoNetworkStatus `json:"k8s.v1.cni.cncf.io/network-status"`
-	K8sV1CniCncfIoNetworksStatus K8sV1CniCncfIoNetworksStatus `json:"k8s.v1.cni.cncf.io/networks-status"`
-	OpenshiftIoScc               string `json:"openshift.io/scc"`
+	// K8sV1CniCncfIoNetworkStatus K8sV1CniCncfIoNetworkStatus `json:"k8s.v1.cni.cncf.io/network-status"`
+	// K8sV1CniCncfIoNetworksStatus K8sV1CniCncfIoNetworksStatus `json:"k8s.v1.cni.cncf.io/networks-status"`
+	OpenshiftIoScc string `json:"openshift.io/scc"`
 }
 
 type K8sOvnOrgPodNetworks struct {
-	Default Default
+	Default Default `json:"default"`
 }
 
 type Default struct {
@@ -47,31 +47,27 @@ type Default struct {
 	GatewayIp   string   `json:"gateway_ip"`
 }
 
-type K8sV1CniCncfIoNetworkStatus struct {
-	Name      string   `json:"name"`
-	Interface string   `json:"interface"`
-	Ips       []string `json:"ips"`
-	Mac       string   `json:"mac"`
-	Default   bool     `json:"default"`
-	Dns       Dns      `json:"dns"`
-}
+// type K8sV1CniCncfIoNetworkStatus struct {
+// 	Name      string   `json:"name"`
+// 	Interface string   `json:"interface"`
+// 	Ips       []string `json:"ips"`
+// 	Mac       string   `json:"mac"`
+// 	Default   bool     `json:"default"`
+// 	Dns       Dns      `json:"dns"`
+// }
 
+// // need too add the dns struct and find examples of it!
+// type Dns struct {
+// }
 
-// need too add the dns struct and find examples of it!
-type Dns struct {
-}
-
-type K8sV1CniCncfIoNetworksStatus struct {
-	Name      string   `json:"name"`
-	Interface string   `json:"interface"`
-	Ips       []string `json:"ips"`
-	Mac       string   `json:"mac"`
-	Default   bool     `json:"default"`
-	Dns       Dns      `json:"dns"`
-}
-
-
-
+// type K8sV1CniCncfIoNetworksStatus struct {
+// 	Name      string   `json:"name"`
+// 	Interface string   `json:"interface"`
+// 	Ips       []string `json:"ips"`
+// 	Mac       string   `json:"mac"`
+// 	Default   bool     `json:"default"`
+// 	Dns       Dns      `json:"dns"`
+// }
 
 type Labels struct {
 	Run string
@@ -93,7 +89,7 @@ func main() {
 		"hostname": "oscar7",
 		"kubernetes": {
 		  "annotations": {
-			"k8s.ovn.org/pod-networks": "{\"default\":{\"ip_addresses\":[\"10.128.0.193/23\"],\"mac_address\":\"0a:58:0a:80:00:c1\",\"gateway_ips\":[\"10.128.0.1\"],\"ip_address\":\"10.128.0.193/23\",\"gateway_ip\":\"10.128.0.1\"}}",
+			"k8s.ovn.org/pod-networks": "{"default":{\"ip_addresses\":[\"10.128.0.193/23\"],\"mac_address\":\"0a:58:0a:80:00:c1\",\"gateway_ips\":[\"10.128.0.1\"],\"ip_address\":\"10.128.0.193/23\",\"gateway_ip\":\"10.128.0.1\"}}",
 			"k8s.v1.cni.cncf.io/network-status": "[{\n    \"name\": \"ovn-kubernetes\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.128.0.193\"\n    ],\n    \"mac\": \"0a:58:0a:80:00:c1\",\n    \"default\": true,\n    \"dns\": {}\n}]",
 			"k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"ovn-kubernetes\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.128.0.193\"\n    ],\n    \"mac\": \"0a:58:0a:80:00:c1\",\n    \"default\": true,\n    \"dns\": {}\n}]",
 			"openshift.io/scc": "privileged"
@@ -124,5 +120,5 @@ func main() {
 	// this initilizes the struct with the json data, and prints out whatever you want
 	var log Log
 	json.Unmarshal([]byte(logJson), &log)
-	fmt.Println(log.Kubernetes.Annotations.OpenshiftIoScc)
+	fmt.Println(log.Kubernetes.Annotations.K8sOvnOrgPodNetworks)
 }
