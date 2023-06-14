@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"sigs.k8s.io/yaml"
 )
 
 type Log struct {
@@ -84,6 +85,15 @@ func main() {
 	  }`
 
 	// this initilizes the struct with the json data, and prints out whatever you want
+	
+	y, err := yaml.JSONToYAML([]byte(logJson))
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		return
+	}
+	fmt.Println(string(y))
+
+	
 	var log Log
 	json.Unmarshal([]byte(logJson), &log)
 	fmt.Printf("The timestamp is: %s\n", log.Timestamp)
