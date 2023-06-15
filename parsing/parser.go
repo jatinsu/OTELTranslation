@@ -37,7 +37,7 @@ type Annotations struct {
 }
 
 type Labels struct {
-	Run string
+	Run string `json:"run"`
 }
 
 type NamespaceLabels struct {

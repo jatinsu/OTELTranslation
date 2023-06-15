@@ -1,63 +1,47 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/tidwall/pretty"
+	"io/ioutil"
+	"log"
 
+	"gopkg.in/yaml.v2"
 )
 
-type Data struct {
-	Spec     Spec     `json:"spec"`
-	Metadata Metadata `json:"metadata"`
-}
-
-type Spec struct {
-	List      []string          `json:"list"`
-	NestedMap map[string]string `json:"nestedMap"`
-}
-
-type Metadata struct {
-	Name    string `json:"name"`
-	Version string `json:"version"`
+type Config struct {
+	Key1 string `yaml:"key1"`
+	Key2 string `yaml:"key2"`
 }
 
 func main() {
-	inputJSON := `
-	{
-	  "metadata": {
-	    "name": "example",
-	    "version": "1.0"
-	  },
-	  "spec": {
-	    "list": ["value1", "value2", "value3"],
-	    "nestedMap": {
-	      "key3": "value3",
-	      "key1": "value1",
-	      "key2": "value2"
-	    }
-	  }
-	}`
-
-	var data Data
-	err := json.Unmarshal([]byte(inputJSON), &data)
+	// Read the YAML file
+	yamlFile, err := ioutil.ReadFile("parsing/config.yaml")
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		log.Fatalf("Failed to read YAML file: %v", err)
 	}
 
-	outputData := Data{
-		Spec:     data.Spec,
-		Metadata: data.Metadata,
-	}
-
-	outputJSON, err := json.Marshal(outputData)
+	// Unmarshal the YAML into a struct
+	var config Config
+	err = yaml.Unmarshal(yamlFile, &config)
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		log.Fatalf("Failed to unmarshal YAML: %v", err)
 	}
 
-	formattedJSON := pretty.Pretty(outputJSON)
+	// Update the struct with desired values
+	config.Key1 = "Value1"
+	config.Key2 = "Value2"
 
-	fmt.Println(string(formattedJSON))
+	// Marshal the struct back to YAML
+	updatedYAML, err := yaml.Marshal(&config)
+	if err != nil {
+		log.Fatalf("Failed to marshal YAML: %v", err)
+	}
+
+	// Write the updated YAML to a file or use it as needed
+	err = ioutil.WriteFile("updated_config.yaml", updatedYAML, 0644)
+	if err != nil {
+		log.Fatalf("Failed to write updated YAML file: %v", err)
+	}
+
+	fmt.Println("Updated YAML file has been created.")
 }
