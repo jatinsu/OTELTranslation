@@ -8,12 +8,12 @@ import (
 
 type Log struct {
 	Timestamp  string `json:"@timestamp"`
-	File       string
-	Hostname   string
-	Kubernetes Kubernetes
-	Level      string
+	File       string `json:"file"`
+	Hostname   string `json:"hostname"`
+	Kubernetes Kubernetes `json:"kubernetes"`
+	Level      string `json:"level"`
 	LogType    string `json:"log_type"`
-	Message    string
+	Message    string `json:"message"`
 }
 
 type Kubernetes struct {
@@ -21,7 +21,7 @@ type Kubernetes struct {
 	ContainerId     string `json:"container_id"`
 	ContainerImage  string `json:"container_image"`
 	ContainerName   string `json:"container_name"`
-	Labels          Labels
+	Labels          Labels `json:"labels"`
 	NamespaceLabels NamespaceLabels `json:"namespace_labels"`
 	NamespaceName   string          `json:"namespace_name"`
 	PodId           string          `json:"pod_id"`
@@ -85,16 +85,10 @@ func main() {
 	  }`
 
 	
-	// y, err := yaml.JSONToYAML([]byte(logJson))
-	// if err != nil {
-	// 	fmt.Printf("err: %v\n", err)
-	// 	return
-	// }
-	//	fmt.Println(string(y))
-
-	
 	var log Log
+
 	json.Unmarshal([]byte(logJson), &log)
+	
 	log2, _ := yaml.Marshal(&log)
 
 	fmt.Println(string(log2))
