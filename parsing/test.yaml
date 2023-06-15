@@ -11,7 +11,7 @@ kubernetes:
   container_image:
   container_name:
   labels:
-    run:
+    Run:
   namespace_labels:
     kubernetes.io/metadata.name:
     pod-security.kubernetes.io/audit:
