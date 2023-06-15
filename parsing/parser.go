@@ -3,51 +3,50 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tidwall/pretty"
-	//"sigs.k8s.io/yaml"
+	"sigs.k8s.io/yaml"
 )
 
 type Log struct {
 	Timestamp  string     `json:"@timestamp"`
 	File       string     `json:"file"`
 	Hostname   string     `json:"hostname"`
-	// Kubernetes Kubernetes `json:"kubernetes"`
-	// Level      string     `json:"level"`
-	// LogType    string     `json:"log_type"`
-	// Message    string     `json:"message"`
+	Kubernetes Kubernetes `json:"kubernetes"`
+	Level      string     `json:"level"`
+	LogType    string     `json:"log_type"`
+	Message    string     `json:"message"`
 }
 
-// type Kubernetes struct {
-// 	Annotations     Annotations
-// 	ContainerId     string          `json:"container_id"`
-// 	ContainerImage  string          `json:"container_image"`
-// 	ContainerName   string          `json:"container_name"`
-// 	Labels          Labels          `json:"labels"`
-// 	NamespaceLabels NamespaceLabels `json:"namespace_labels"`
-// 	NamespaceName   string          `json:"namespace_name"`
-// 	PodId           string          `json:"pod_id"`
-// 	PodIp           string          `json:"pod_ip"`
-// 	PodName         string          `json:"pod_name"`
-// }
+type Kubernetes struct {
+	Annotations     Annotations
+	ContainerId     string          `json:"container_id"`
+	ContainerImage  string          `json:"container_image"`
+	ContainerName   string          `json:"container_name"`
+	Labels          Labels          `json:"labels"`
+	NamespaceLabels NamespaceLabels `json:"namespace_labels"`
+	NamespaceName   string          `json:"namespace_name"`
+	PodId           string          `json:"pod_id"`
+	PodIp           string          `json:"pod_ip"`
+	PodName         string          `json:"pod_name"`
+}
 
-// type Annotations struct {
-// 	K8sOvnOrgPodNetworks         string `json:"k8s.ovn.org/pod-networks"`
-// 	K8sV1CniCncfIoNetworkStatus  string `json:"k8s.v1.cni.cncf.io/network-status"`
-// 	K8sV1CniCncfIoNetworksStatus string `json:"k8s.v1.cni.cncf.io/networks-status"`
-// 	OpenshiftIoScc               string `json:"openshift.io/scc"`
-// }
+type Annotations struct {
+	K8sOvnOrgPodNetworks         string `json:"k8s.ovn.org/pod-networks"`
+	K8sV1CniCncfIoNetworkStatus  string `json:"k8s.v1.cni.cncf.io/network-status"`
+	K8sV1CniCncfIoNetworksStatus string `json:"k8s.v1.cni.cncf.io/networks-status"`
+	OpenshiftIoScc               string `json:"openshift.io/scc"`
+}
 
-// type Labels struct {
-// 	Run string
-// }
+type Labels struct {
+	Run string
+}
 
-// type NamespaceLabels struct {
-// 	KubernetesIoMetadataName            string `json:"kubernetes.io/metadata.name"`
-// 	PodSecurityKubernetesIoAudit        string `json:"pod-security.kubernetes.io/audit"`
-// 	PodSecurityKubernetesIoAuditVersion string `json:"pod-security.kubernetes.io/audit-version"`
-// 	PodSecurityKubernetesIoWarn         string `json:"pod-security.kubernetes.io/warn"`
-// 	PodSecurityKubernetesIoWarnVersion  string `json:"pod-security.kubernetes.io/warn-version"`
-// }
+type NamespaceLabels struct {
+	KubernetesIoMetadataName            string `json:"kubernetes.io/metadata.name"`
+	PodSecurityKubernetesIoAudit        string `json:"pod-security.kubernetes.io/audit"`
+	PodSecurityKubernetesIoAuditVersion string `json:"pod-security.kubernetes.io/audit-version"`
+	PodSecurityKubernetesIoWarn         string `json:"pod-security.kubernetes.io/warn"`
+	PodSecurityKubernetesIoWarnVersion  string `json:"pod-security.kubernetes.io/warn-version"`
+}
 
 func main() {
 
@@ -86,48 +85,13 @@ func main() {
 	  }`
 
 	var log Log
-
 	json.Unmarshal([]byte(logJson), &log)
 
-	testData := Log{
-		Timestamp: log.Timestamp,
-		Hostname:  log.Hostname,
-		File:      log.File,
-		// Level:   log.Level,
-		// LogType: log.LogType,
-		// Message: log.Message,
-		// Kubernetes: Kubernetes{
-		// 	Annotations: Annotations{
-		// 		K8sOvnOrgPodNetworks:         log.Kubernetes.Annotations.K8sOvnOrgPodNetworks,
-		// 		K8sV1CniCncfIoNetworkStatus:  log.Kubernetes.Annotations.K8sV1CniCncfIoNetworkStatus,
-		// 		K8sV1CniCncfIoNetworksStatus: log.Kubernetes.Annotations.K8sV1CniCncfIoNetworksStatus,
-		// 		OpenshiftIoScc:               log.Kubernetes.Annotations.OpenshiftIoScc,
-		// 	},
-		// 	ContainerId:    log.Kubernetes.ContainerId,
-		// 	ContainerImage: log.Kubernetes.ContainerImage,
-		// 	ContainerName:  log.Kubernetes.ContainerName,
-		// 	Labels: Labels{
-		// 		Run: log.Kubernetes.Labels.Run,
-		// 	},
-		// 	NamespaceLabels: NamespaceLabels{
-		// 		KubernetesIoMetadataName:            log.Kubernetes.NamespaceLabels.KubernetesIoMetadataName,
-		// 		PodSecurityKubernetesIoAudit:        log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoAudit,
-		// 		PodSecurityKubernetesIoAuditVersion: log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoAuditVersion,
-		// 		PodSecurityKubernetesIoWarn:         log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoWarn,
-		// 		PodSecurityKubernetesIoWarnVersion:  log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoWarnVersion,
-		// 	},
-		// 	NamespaceName: log.Kubernetes.NamespaceName,
-		// 	PodId:         log.Kubernetes.PodId,
-		// 	PodIp:         log.Kubernetes.PodIp,
-		// 	PodName:       log.Kubernetes.PodName,
-		// },
-	}
+	formattedJSON, _ := json.MarshalIndent(log, "", "  ")
 
-	outputJSON, _ := json.Marshal(testData)
+	//fmt.Println(string(formattedJSON))
 
-	//log2, _ := yaml.Marshal(&outputJSON)
-	formattedJSON := pretty.Pretty(outputJSON)
-
-	fmt.Println(string(formattedJSON))
-
+	// this turns the formattedJSON into a yaml string
+	yamlString, _ := yaml.JSONToYAML(formattedJSON)
+	fmt.Println(string(yamlString))
 }
