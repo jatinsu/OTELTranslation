@@ -1,39 +1,63 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/tidwall/pretty"
 
-	"sigs.k8s.io/yaml"
 )
 
-type Person struct {
-	Name string `json:"name"` // Affects YAML field names too.
-	Age  int    `json:"age"`
+type Data struct {
+	Spec     Spec     `json:"spec"`
+	Metadata Metadata `json:"metadata"`
+}
+
+type Spec struct {
+	List      []string          `json:"list"`
+	NestedMap map[string]string `json:"nestedMap"`
+}
+
+type Metadata struct {
+	Name    string `json:"name"`
+	Version string `json:"version"`
 }
 
 func main() {
-	// Marshal a Person struct to YAML.
-	p := Person{"John", 30}
-	y, err := yaml.Marshal(p)
-	if err != nil {
-		fmt.Printf("err: %v\n", err)
-		return
-	}
-	fmt.Println(string(y))
-	/* Output:
-	age: 30
-	name: John
-	*/
+	inputJSON := `
+	{
+	  "metadata": {
+	    "name": "example",
+	    "version": "1.0"
+	  },
+	  "spec": {
+	    "list": ["value1", "value2", "value3"],
+	    "nestedMap": {
+	      "key3": "value3",
+	      "key1": "value1",
+	      "key2": "value2"
+	    }
+	  }
+	}`
 
-	// Unmarshal the YAML back into a Person struct.
-	var p2 Person
-	err = yaml.Unmarshal(y, &p2)
+	var data Data
+	err := json.Unmarshal([]byte(inputJSON), &data)
 	if err != nil {
-		fmt.Printf("err: %v\n", err)
+		fmt.Println("Error:", err)
 		return
 	}
-	fmt.Println(p2)
-	/* Output:
-	{John 30}
-	*/
+
+	outputData := Data{
+		Spec:     data.Spec,
+		Metadata: data.Metadata,
+	}
+
+	outputJSON, err := json.Marshal(outputData)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	formattedJSON := pretty.Pretty(outputJSON)
+
+	fmt.Println(string(formattedJSON))
 }
