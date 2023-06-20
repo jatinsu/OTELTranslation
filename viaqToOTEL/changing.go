@@ -286,5 +286,5 @@ func main() {
 
 	outputJSON, _ := json.MarshalIndent(theNewLog, "", "    ")
 	fmt.Println(string(outputJSON))
-	ioutil.WriteFile("newLog.json", []byte(outputJSON), 0644)
+	ioutil.WriteFile("Logs/newLog.json", []byte(outputJSON), 0644)
 }
