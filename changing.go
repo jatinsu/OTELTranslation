@@ -3,30 +3,30 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	//"io/ioutil"
 )
 
 type Log struct {
-	Timestamp	  string `json:"@timestamp"`
-	File          string `json:"file"`
-	Hostname      string `json:"hostname"`
-	Kubernetes    Kubernetes `json:"kubernetes"`
-	Level         string `json:"level"`
-	LogType       string `json:"log_type"`
-	Message       string `json:"message"`
+	Timestamp  string     `json:"@timestamp"`
+	File       string     `json:"file"`
+	Hostname   string     `json:"hostname"`
+	Kubernetes Kubernetes `json:"kubernetes"`
+	Level      string     `json:"level"`
+	LogType    string     `json:"log_type"`
+	Message    string     `json:"message"`
 }
 
 type Kubernetes struct {
-	Annotations   Annotations `json:"annotations"`
-	ContainerId   string `json:"container_id"`
-	ContainerImage string `json:"container_image"`
-	ContainerName string `json:"container_name"`
-	Labels        Labels `json:"labels"`
+	Annotations     Annotations     `json:"annotations"`
+	ContainerId     string          `json:"container_id"`
+	ContainerImage  string          `json:"container_image"`
+	ContainerName   string          `json:"container_name"`
+	Labels          Labels          `json:"labels"`
 	NamespaceLabels NamespaceLabels `json:"namespace_labels"`
-	NamespaceName string `json:"namespace_name"`
-	PodId         string `json:"pod_id"`
-	PodIp         string `json:"pod_ip"`
-	PodName       string `json:"pod_name"`
+	NamespaceName   string          `json:"namespace_name"`
+	PodId           string          `json:"pod_id"`
+	PodIp           string          `json:"pod_ip"`
+	PodName         string          `json:"pod_name"`
 }
 
 type Annotations struct {
@@ -68,11 +68,19 @@ type Body struct {
 }
 
 type Resource struct {
-	Log        Log          `json:"log"`
+	TheLog     TheLog       `json:"log"`
 	Host       Host         `json:"host"`
 	Container  Container    `json:"container"`
 	K8s        K8s          `json:"k8s"`
 	Attributes []Attributes `json:"attributes"`
+}
+
+type TheLog struct {
+	TheFile TheFile `json:"file"`
+}
+
+type TheFile struct {
+	Path string `json:"path"`
 }
 
 type Host struct {
@@ -252,9 +260,9 @@ func main() {
 	`
 
 	var log Log
-//	var newLog newLog
+	//	var newLog newLog
 	json.Unmarshal([]byte(logJson), &log)
-//	json.Unmarshal([]byte(newLogJson), &newLog)
+	//	json.Unmarshal([]byte(newLogJson), &newLog)
 
 	theNewLog := newLog{
 		Timestamp:      log.Timestamp,
@@ -264,8 +272,10 @@ func main() {
 			Stringvalue: log.Message,
 		},
 		Resource: Resource{
-			Log: Log{
-				File: log.File,
+			TheLog: TheLog{
+				TheFile: TheFile{
+					Path: log.File,
+				},
 			},
 			Host: Host{
 				Name: log.Hostname,
@@ -279,35 +289,35 @@ func main() {
 			},
 			K8s: K8s{
 				Pod: Pod{
-					Name: log.Kubernetes.PodName,
-					Uid:  log.Kubernetes.PodId,
-					Ip:   log.Kubernetes.PodIp,
+					Name:  log.Kubernetes.PodName,
+					Uid:   log.Kubernetes.PodId,
+					Ip:    log.Kubernetes.PodIp,
 					Owner: log.Kubernetes.Annotations.K8sOvnOrgPodNetworks,
 					NewAnnotations: NewAnnotations{
-						K8sOvnOrgPodNetworks: log.Kubernetes.Annotations.K8sOvnOrgPodNetworks,
-						K8sV1CniCncfIoNetworkStatus: log.Kubernetes.Annotations.K8sV1CniCncfIoNetworkStatus,
-						K8sV1CniCncfIoNetworksStatus: log.Kubernetes.Annotations.K8sV1CniCncfIoNetworksStatus,
-						OpenshiftIoScc: log.Kubernetes.Annotations.OpenshiftIoScc,
-						OperatorOpenshiftOauthApiserverEtcdClientSecret: log.Kubernetes.Annotations.OperatorOpenshiftOauthApiserverEtcdClientSecret,
+						K8sOvnOrgPodNetworks:                                  log.Kubernetes.Annotations.K8sOvnOrgPodNetworks,
+						K8sV1CniCncfIoNetworkStatus:                           log.Kubernetes.Annotations.K8sV1CniCncfIoNetworkStatus,
+						K8sV1CniCncfIoNetworksStatus:                          log.Kubernetes.Annotations.K8sV1CniCncfIoNetworksStatus,
+						OpenshiftIoScc:                                        log.Kubernetes.Annotations.OpenshiftIoScc,
+						OperatorOpenshiftOauthApiserverEtcdClientSecret:       log.Kubernetes.Annotations.OperatorOpenshiftOauthApiserverEtcdClientSecret,
 						OperatorOpenshiftOauthApiserverEtcdServingCaConfigmap: log.Kubernetes.Annotations.OperatorOpenshiftOauthApiserverEtcdServingCaConfigmap,
 					},
 					K8sLabels: K8sLabels{
-						Apiserver: log.Kubernetes.Labels.Apiserver,
-						App: log.Kubernetes.NamespaceLabels.KubernetesIoMetadataName,
+						Apiserver:                  log.Kubernetes.Labels.Apiserver,
+						App:                        log.Kubernetes.NamespaceLabels.KubernetesIoMetadataName,
 						OauthApiserverAntiAffinity: log.Kubernetes.Labels.OauthApiserverAntiAffinity,
-						PodTemplateHash: log.Kubernetes.Labels.PodTemplateHash,
-						Revision: log.Kubernetes.Labels.Revision,
+						PodTemplateHash:            log.Kubernetes.Labels.PodTemplateHash,
+						Revision:                   log.Kubernetes.Labels.Revision,
 					},
 				},
 				Namespace: Namespace{
 					Name: log.Kubernetes.NamespaceName,
 					NewNamespaceLabels: NewNamespaceLabels{
-						KubernetesIoMetadataName: log.Kubernetes.NamespaceLabels.KubernetesIoMetadataName,
+						KubernetesIoMetadataName:                            log.Kubernetes.NamespaceLabels.KubernetesIoMetadataName,
 						OlmOperatorgroupUidD5ae8d2e99f34020998d9fc74c33faeb: log.Kubernetes.NamespaceLabels.OlmOperatorgroupUidD5ae8d2e99f34020998d9fc74c33faeb,
-						OpenshiftIoClusterMonitoring: log.Kubernetes.NamespaceLabels.OpenshiftIoClusterMonitoring,
-						PodSecurityKubernetesIoAudit: log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoAudit,
-						PodSecurityKubernetesIoEnforce: log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoEnforce,
-						PodSecurityKubernetesIoWarn: log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoWarn,
+						OpenshiftIoClusterMonitoring:                        log.Kubernetes.NamespaceLabels.OpenshiftIoClusterMonitoring,
+						PodSecurityKubernetesIoAudit:                        log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoAudit,
+						PodSecurityKubernetesIoEnforce:                      log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoEnforce,
+						PodSecurityKubernetesIoWarn:                         log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoWarn,
 					},
 				},
 			},
@@ -322,5 +332,5 @@ func main() {
 
 	outputJSON, _ := json.MarshalIndent(theNewLog, "", "    ")
 	fmt.Println(string(outputJSON))
-	ioutil.WriteFile("newLog.json", []byte(outputJSON), 0644)
+	//ioutil.WriteFile("newLog.json", []byte(outputJSON), 0644)
 }
