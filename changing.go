@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-//	"io/ioutil"
 )
 
 
@@ -50,6 +49,53 @@ type NamespaceLabels struct {
 }
 
 
+type newLog struct {
+	Timestamp  string     `json:"timeUnixNano"`
+}
+	// change this to a log struct with file/path in it
+// 	File       string     `json:"file"`
+// 	// change this to host struct with a host path
+// 	Hostname   string     `json:"hostname"`
+// 	Kubernetes Kubernetes `json:"kubernetes"`
+// 	Level      string     `json:"level"`
+// 	LogType    string     `json:"log_type"`
+// 	Message    string     `json:"message"`
+// }
+
+// type newKubernetes struct {
+// 	Annotations     Annotations
+// 	ContainerId     string          `json:"container_id"`
+// 	ContainerImage  string          `json:"container_image"`
+// 	ContainerName   string          `json:"container_name"`
+// 	Labels          Labels          `json:"labels"`
+// 	NamespaceLabels NamespaceLabels `json:"namespace_labels"`
+// 	NamespaceName   string          `json:"namespace_name"`
+// 	PodId           string          `json:"pod_id"`
+// 	PodIp           string          `json:"pod_ip"`
+// 	PodName         string          `json:"pod_name"`
+// }
+
+// type newAnnotations struct {
+// 	K8sOvnOrgPodNetworks         string `json:"k8s.ovn.org/pod-networks"`
+// 	K8sV1CniCncfIoNetworkStatus  string `json:"k8s.v1.cni.cncf.io/network-status"`
+// 	K8sV1CniCncfIoNetworksStatus string `json:"k8s.v1.cni.cncf.io/networks-status"`
+// 	OpenshiftIoScc               string `json:"openshift.io/scc"`
+// }
+
+// type newLabels struct {
+// 	Run string `json:"run"`
+// }
+
+// type newNamespaceLabels struct {
+// 	KubernetesIoMetadataName            string `json:"kubernetes.io/metadata.name"`
+// 	PodSecurityKubernetesIoAudit        string `json:"pod-security.kubernetes.io/audit"`
+// 	PodSecurityKubernetesIoAuditVersion string `json:"pod-security.kubernetes.io/audit-version"`
+// 	PodSecurityKubernetesIoWarn         string `json:"pod-security.kubernetes.io/warn"`
+// 	PodSecurityKubernetesIoWarnVersion  string `json:"pod-security.kubernetes.io/warn-version"`
+// }
+
+
+
 func main(){
 	logJson := `{
 		"@timestamp": "2022-10-20T14:53:47.653917399Z",
@@ -87,6 +133,11 @@ func main(){
 
 	var log Log
 	json.Unmarshal([]byte(logJson), &log)
-	outputJSON, _ := json.Marshal(log)
+
+	targetData := newLog{
+		Timestamp: log.Timestamp,
+	}
+
+	outputJSON, _ := json.Marshal(targetData)
 	fmt.Println(string(outputJSON))
 }
