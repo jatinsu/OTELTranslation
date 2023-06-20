@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"time"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Log struct {
@@ -151,19 +151,18 @@ type Attributes struct {
 	Value string `json:"value"`
 }
 
-
-func changeTime(oldTime string) string{
+func changeTime(oldTime string) string {
 	parsedTime, _ := time.Parse(time.RFC3339Nano, oldTime)
 	unixNanoTime := parsedTime.UnixNano()
 	return strconv.Itoa(int(unixNanoTime))
 }
 
-func imageSpliceBefore(oldImage string) string{
+func imageSpliceBefore(oldImage string) string {
 	before := strings.LastIndex(oldImage, ":")
 	return oldImage[:before] // everything up to the last : is
 }
 
-func imageSplice(oldImage string) string{
+func imageSplice(oldImage string) string {
 	newImage := oldImage[strings.Index(oldImage, ":"):]
 	return newImage
 }
