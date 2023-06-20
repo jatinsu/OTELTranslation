@@ -2,10 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	//"fmt"
+	"fmt"
 	"sigs.k8s.io/yaml"
 	"io/ioutil"
 )
+
 
 type Log struct {
 	Timestamp  string     `json:"@timestamp" yaml:"@timestamp"`
@@ -49,8 +50,8 @@ type NamespaceLabels struct {
 	PodSecurityKubernetesIoWarnVersion  string `json:"pod-security.kubernetes.io/warn-version"`
 }
 
-func main() {
 
+func main(){
 	logJson := `{
 		"@timestamp": "2022-10-20T14:53:47.653917399Z",
 		"file": "/var/log/pods/test-log-generator_test-log-generator_cbc621a0-6b87-43bf-843c-ffeed2f1207d/test-log-generator/15.log",
@@ -84,19 +85,4 @@ func main() {
 		"log_type": "application",
 		"message": "Use \"logger [command] --help\" for more information about a command."
 	  }`
-
-	var log Log
-	var config Log
-	json.Unmarshal([]byte(logJson), &log)
-	//formattedJSON, _ := json.MarshalIndent(log, "", "  ")
-	yamlFile, _ := ioutil.ReadFile("parsing/config.yaml")
-	
-	yaml.Unmarshal(yamlFile, &config)
-	config.Hostname = log.Hostname
-	config.File = log.File
-	config.Timestamp = log.Timestamp
-
-	updateYAML, _ := yaml.Marshal(config)
-
-	ioutil.WriteFile("parsing/test.yaml", updateYAML, 0644)
 }
