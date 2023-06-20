@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"time"
 	"strconv"
+	"strings"
 )
 
 type Log struct {
@@ -155,7 +156,17 @@ func changeTime(oldTime string) string{
 	parsedTime, _ := time.Parse(time.RFC3339Nano, oldTime)
 	unixNanoTime := parsedTime.UnixNano()
 	return strconv.Itoa(int(unixNanoTime))
-}	
+}
+
+func imageSpliceBefore(oldImage string) string{
+	before := strings.LastIndex(oldImage, ":")
+	return oldImage[:before] // everything up to the last : is
+}
+
+func imageSplice(oldImage string) string{
+	newImage := oldImage[strings.Index(oldImage, ":"):]
+	return newImage
+}
 
 func main() {
 	logJson := `{
@@ -226,7 +237,8 @@ func main() {
 				Name: log.Kubernetes.ContainerName,
 				Id:   log.Kubernetes.ContainerId,
 				Image: Image{
-					Name: log.Kubernetes.ContainerImage,
+					Name: imageSpliceBefore(log.Kubernetes.ContainerImage),
+					Tag:  imageSplice(log.Kubernetes.ContainerImage),
 				},
 			},
 			K8s: K8s{

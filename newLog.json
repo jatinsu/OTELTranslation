@@ -18,8 +18,8 @@
             "name": "oauth-apiserver",
             "id": "cri-o://ae8d9c8e46defc9ff1df9a35076e04e7bd6be2d9056500570bf9e3f85e9d6885",
             "image": {
-                "name": "quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:ed90fd557cc619f98a99bc8c552ee7b8a8ee369a3a2cdf2f9a4727878d2d049e",
-                "tag": ""
+                "name": "quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256",
+                "tag": ":ed90fd557cc619f98a99bc8c552ee7b8a8ee369a3a2cdf2f9a4727878d2d049e"
             }
         },
         "k8s": {
