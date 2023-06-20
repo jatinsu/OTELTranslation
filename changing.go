@@ -3,8 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"sigs.k8s.io/yaml"
-	"io/ioutil"
+//	"io/ioutil"
 )
 
 
@@ -85,4 +84,9 @@ func main(){
 		"log_type": "application",
 		"message": "Use \"logger [command] --help\" for more information about a command."
 	  }`
+
+	var log Log
+	json.Unmarshal([]byte(logJson), &log)
+	outputJSON, _ := json.Marshal(log)
+	fmt.Println(string(outputJSON))
 }
