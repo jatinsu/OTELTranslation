@@ -28,6 +28,7 @@ type Kubernetes struct {
 	PodName         string          `json:"pod_name"`
 }
 
+
 type Annotations struct {
 	K8sOvnOrgPodNetworks                                  string `json:"k8s.ovn.org/pod-networks"`
 	K8sV1CniCncfIoNetworkStatus                           string `json:"k8s.v1.cni.cncf.io/network-status"`
