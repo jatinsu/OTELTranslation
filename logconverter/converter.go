@@ -1,4 +1,5 @@
 package logconverter
+
 import (
 	"strconv"
 	"strings"
@@ -26,17 +27,11 @@ type Kubernetes struct {
 	PodId           string          `json:"pod_id"`
 	PodIp           string          `json:"pod_ip"`
 	PodName         string          `json:"pod_name"`
+	PodOwner 	  	string          `json:"pod_owner"`
 }
 
+type Annotations map[string]string
 
-type Annotations struct {
-	K8sOvnOrgPodNetworks                                  string `json:"k8s.ovn.org/pod-networks"`
-	K8sV1CniCncfIoNetworkStatus                           string `json:"k8s.v1.cni.cncf.io/network-status"`
-	K8sV1CniCncfIoNetworksStatus                          string `json:"k8s.v1.cni.cncf.io/networks-status"`
-	OpenshiftIoScc                                        string `json:"openshift.io/scc"`
-	OperatorOpenshiftOauthApiserverEtcdClientSecret       string `json:"operator.openshift.io/dep-openshift-oauth-apiserver.etcd-client.secret"`
-	OperatorOpenshiftOauthApiserverEtcdServingCaConfigmap string `json:"operator.openshift.io/dep-openshift-oauth-apiserver.etcd-serving-ca.configmap"`
-}
 
 type Labels struct {
 	Apiserver                  string `json:"apiserver"`
@@ -112,14 +107,8 @@ type Pod struct {
 	K8sLabels      K8sLabels      `json:"labels"`
 }
 
-type NewAnnotations struct {
-	K8sOvnOrgPodNetworks                                  string `json:"k8s.ovn.org/pod-networks"`
-	K8sV1CniCncfIoNetworkStatus                           string `json:"k8s.v1.cni.cncf.io/network-status"`
-	K8sV1CniCncfIoNetworksStatus                          string `json:"k8s.v1.cni.cncf.io/networks-status"`
-	OpenshiftIoScc                                        string `json:"openshift.io/scc"`
-	OperatorOpenshiftOauthApiserverEtcdClientSecret       string `json:"operator.openshift.io/dep-openshift-oauth-apiserver.etcd-client.secret"`
-	OperatorOpenshiftOauthApiserverEtcdServingCaConfigmap string `json:"operator.openshift.io/dep-openshift-oauth-apiserver.etcd-serving-ca.configmap"`
-}
+type NewAnnotations map[string]string
+
 
 type K8sLabels struct {
 	Apiserver                  string `json:"apiserver"`
@@ -178,15 +167,8 @@ func ConvertLog(log Log) newLog{
 					Name:  log.Kubernetes.PodName,
 					Uid:   log.Kubernetes.PodId,
 					Ip:    log.Kubernetes.PodIp,
-					Owner: log.Kubernetes.Annotations.K8sOvnOrgPodNetworks,
-					NewAnnotations: NewAnnotations{
-						K8sOvnOrgPodNetworks:                                  log.Kubernetes.Annotations.K8sOvnOrgPodNetworks,
-						K8sV1CniCncfIoNetworkStatus:                           log.Kubernetes.Annotations.K8sV1CniCncfIoNetworkStatus,
-						K8sV1CniCncfIoNetworksStatus:                          log.Kubernetes.Annotations.K8sV1CniCncfIoNetworksStatus,
-						OpenshiftIoScc:                                        log.Kubernetes.Annotations.OpenshiftIoScc,
-						OperatorOpenshiftOauthApiserverEtcdClientSecret:       log.Kubernetes.Annotations.OperatorOpenshiftOauthApiserverEtcdClientSecret,
-						OperatorOpenshiftOauthApiserverEtcdServingCaConfigmap: log.Kubernetes.Annotations.OperatorOpenshiftOauthApiserverEtcdServingCaConfigmap,
-					},
+					Owner: log.Kubernetes.PodOwner,
+					NewAnnotations: NewAnnotations(log.Kubernetes.Annotations),
 					K8sLabels: K8sLabels{
 						Apiserver:                  log.Kubernetes.Labels.Apiserver,
 						App:                        log.Kubernetes.NamespaceLabels.KubernetesIoMetadataName,

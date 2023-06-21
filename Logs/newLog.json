@@ -27,7 +27,7 @@
                 "name": "apiserver-b477bc494-hmj4r",
                 "uid": "998cef46-bccd-437e-9727-4d6389436885",
                 "ip": "10.128.0.33",
-                "owner": "{\"default\":{\"ip_addresses\":[\"10.128.0.33/23\"],\"mac_address\":\"0a:58:0a:80:00:21\",\"gateway_ips\":[\"10.128.0.1\"],\"ip_address\":\"10.128.0.33/23\",\"gateway_ip\":\"10.128.0.1\"}}",
+                "owner": "ReplicaSet/apiserver-b477bc494",
                 "annotations": {
                     "k8s.ovn.org/pod-networks": "{\"default\":{\"ip_addresses\":[\"10.128.0.33/23\"],\"mac_address\":\"0a:58:0a:80:00:21\",\"gateway_ips\":[\"10.128.0.1\"],\"ip_address\":\"10.128.0.33/23\",\"gateway_ip\":\"10.128.0.1\"}}",
                     "k8s.v1.cni.cncf.io/network-status": "[{\n    \"name\": \"ovn-kubernetes\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.128.0.33\"\n    ],\n    \"mac\": \"0a:58:0a:80:00:21\",\n    \"default\": true,\n    \"dns\": {}\n}]",

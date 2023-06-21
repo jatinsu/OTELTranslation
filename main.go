@@ -19,7 +19,8 @@ func main() {
 	var log logconverter.Log
 	json.Unmarshal([]byte(logJson), &log)
 
-	// Update the function call to reference the logconverter package
+	//fmt.Println(string(logJson))
+	//Update the function call to reference the logconverter package
 	theNewLog := logconverter.ConvertLog(log)
 
 	outputJSON, _ := json.MarshalIndent(theNewLog, "", "    ")
