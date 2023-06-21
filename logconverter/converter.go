@@ -1,9 +1,5 @@
-package main
-
+package logconverter
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"strconv"
 	"strings"
 	"time"
@@ -234,24 +230,4 @@ func imageSpliceBefore(oldImage string) string {
 func imageSplice(oldImage string) string {
 	newImage := oldImage[strings.Index(oldImage, ":"):]
 	return newImage
-}
-
-func main() {
-	// this imports the json file and puts in logJson
-	logJson, err := ioutil.ReadFile("Logs/viaq.json")
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	
-	var log Log
-	//	var newLog newLog
-	json.Unmarshal([]byte(logJson), &log)
-	//	json.Unmarshal([]byte(newLogJson), &newLog)
-
-	theNewLog := ConvertLog(log)
-
-	outputJSON, _ := json.MarshalIndent(theNewLog, "", "    ")
-	fmt.Println(string(outputJSON))
-	ioutil.WriteFile("Logs/newLog.json", []byte(outputJSON), 0644)
 }
