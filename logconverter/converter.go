@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"github.com/openshift/cluster-logging-operator/test/helpers/types"
 )
 
 type Log struct {
