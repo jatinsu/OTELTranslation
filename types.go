@@ -5,7 +5,6 @@ import (
 	"time"
 
 	v1 "k8s.io/api/core/v1"
-
 )
 
 var ErrParse = errors.New("logs could not be parsed")
@@ -471,8 +470,6 @@ type AllLog struct {
 	K8SAuditLevel            string         `json:"k8s_audit_level,omitempty"`
 	OpenshiftAuditLevel      string         `json:"openshift_audit_level,omitempty"`
 }
-
-
 
 type Timing struct {
 	// EpocIn is only added during benchmark testing
