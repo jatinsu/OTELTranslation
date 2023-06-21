@@ -151,35 +151,7 @@ type Attributes struct {
 	Value string `json:"value"`
 }
 
-func changeTime(oldTime string) string {
-	parsedTime, _ := time.Parse(time.RFC3339Nano, oldTime)
-	unixNanoTime := parsedTime.UnixNano()
-	return strconv.Itoa(int(unixNanoTime))
-}
-
-func imageSpliceBefore(oldImage string) string {
-	before := strings.LastIndex(oldImage, ":")
-	return oldImage[:before] // everything up to the last : is
-}
-
-func imageSplice(oldImage string) string {
-	newImage := oldImage[strings.Index(oldImage, ":"):]
-	return newImage
-}
-
-func main() {
-	// this imports the json file and puts in logJson
-	logJson, err := ioutil.ReadFile("Logs/viaq.json")
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	
-	var log Log
-	//	var newLog newLog
-	json.Unmarshal([]byte(logJson), &log)
-	//	json.Unmarshal([]byte(newLogJson), &newLog)
-
+func ConvertLog(log Log) newLog{
 	theNewLog := newLog{
 		Timestamp:      changeTime(log.Timestamp),
 		SeverityText:   log.Level,
@@ -246,6 +218,38 @@ func main() {
 			},
 		},
 	}
+	return theNewLog
+}
+func changeTime(oldTime string) string {
+	parsedTime, _ := time.Parse(time.RFC3339Nano, oldTime)
+	unixNanoTime := parsedTime.UnixNano()
+	return strconv.Itoa(int(unixNanoTime))
+}
+
+func imageSpliceBefore(oldImage string) string {
+	before := strings.LastIndex(oldImage, ":")
+	return oldImage[:before] // everything up to the last : is
+}
+
+func imageSplice(oldImage string) string {
+	newImage := oldImage[strings.Index(oldImage, ":"):]
+	return newImage
+}
+
+func main() {
+	// this imports the json file and puts in logJson
+	logJson, err := ioutil.ReadFile("Logs/viaq.json")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	
+	var log Log
+	//	var newLog newLog
+	json.Unmarshal([]byte(logJson), &log)
+	//	json.Unmarshal([]byte(newLogJson), &newLog)
+
+	theNewLog := ConvertLog(log)
 
 	outputJSON, _ := json.MarshalIndent(theNewLog, "", "    ")
 	fmt.Println(string(outputJSON))
