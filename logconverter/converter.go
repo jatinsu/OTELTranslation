@@ -1,9 +1,10 @@
 package logconverter
 
 import (
+	"strconv"
 	"strings"
 	"time"
-	"strconv"
+
 	"github.com/openshift/cluster-logging-operator/test/helpers/types"
 )
 
@@ -13,8 +14,17 @@ type newLog struct {
 	SeverityText   string   `json:"severityText,omitempty"`
 	SeverityNumber string   `json:"severityNumber,omitempty"`
 	Body           Body     `json:"body,omitempty"`
+	NewLogCollector NewLogCollector	`json:"collector,omitempty"`
 	Resource       Resource `json:"resource,omitempty"`
 }
+
+type NewLogCollector struct {
+	Ipaddr4 string `json:"ipaddr4,omitempty"`
+	Name    string `json:"name,omitempty"`
+	ReceivedAt string `json:"receivedAt,omitempty"`
+	Version string `json:"version,omitempty"`
+}
+
 type Body struct {
 	Stringvalue string `json:"stringValue,omitempty"`
 }
@@ -113,10 +123,10 @@ func ConvertLog(log types.ContainerLog) newLog {
 					Owner:          log.Kubernetes.Host,
 					NewAnnotations: NewAnnotations(log.Kubernetes.Annotations),
 					// THIS
-					K8sLabels:      K8sLabels(log.Kubernetes.Labels),
+					K8sLabels: K8sLabels(log.Kubernetes.Labels),
 				},
 				Namespace: Namespace{
-					Name:               log.Kubernetes.NamespaceName,
+					Name: log.Kubernetes.NamespaceName,
 					// THIS
 					NewNamespaceLabels: NewNamespaceLabels(log.Kubernetes.NamespaceLabels),
 				},
