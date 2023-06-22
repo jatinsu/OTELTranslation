@@ -3,7 +3,7 @@
 A small Go Project to parse and translate ViaQ JSON log files into OTEL YAML files.
 
 ## Todo
-- [ x ] collector (made up, couldn't find equavalient)
+- [x] collector (made up, couldn't find equavalient)
 - [ ] EventData (skip for now)
 - [ ] Pipelinemetadata
 - [ ] openshiftmeta
