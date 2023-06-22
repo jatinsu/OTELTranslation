@@ -3,9 +3,10 @@ package logconverter
 import (
 	"strings"
 	"time"
-
+	"strconv"
 	"github.com/openshift/cluster-logging-operator/test/helpers/types"
 )
+
 // New json file
 type newLog struct {
 	Timestamp      string   `json:"timeUnixNano,omitempty"`
@@ -131,8 +132,10 @@ func ConvertLog(log types.ContainerLog) newLog {
 	return theNewLog
 }
 func changeTime(oldTime time.Time) string {
-	convertedTime := oldTime.Format(time.RFC3339Nano)
-	return convertedTime
+	formattedTime := oldTime.Format("2006-01-02T15:04:05.999999999Z")
+	parsedTime, _ := time.Parse(time.RFC3339Nano, formattedTime)
+	unixNanoTime := parsedTime.UnixNano()
+	return strconv.Itoa(int(unixNanoTime))
 }
 
 func imageSpliceBefore(oldImage string) string {

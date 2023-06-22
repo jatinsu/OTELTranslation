@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"workspace/logconverter"
-	"github.com/openshift/cluster-logging-operator/test/helpers/types"
 
+	"github.com/openshift/cluster-logging-operator/test/helpers/types"
 )
 
 func main() {
