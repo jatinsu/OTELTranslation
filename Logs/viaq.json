@@ -35,7 +35,7 @@
 	"pod_name": "apiserver-b477bc494-hmj4r",
 	"pod_owner": "ReplicaSet/apiserver-b477bc494"
     },
-    "level": "error",
+    "level": "err",
     "log_type": "infrastructure",
     "message": "E1020 15:11:30.764269       1 timeout.go:137] post-timeout activity - time-elapsed: 1.321595349s, GET \"/readyz\" result: <nil>"
 }

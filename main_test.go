@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"testing"
 	"workspace/logconverter"
+	"github.com/openshift/cluster-logging-operator/test/helpers/types"
 )
 
 func TestConvertLog(t *testing.T) {
@@ -16,7 +17,7 @@ func TestConvertLog(t *testing.T) {
 		return
 	}
 
-	var log logconverter.Log
+	var log types.ContainerLog
 	err = json.Unmarshal(logJson, &log)
 	if err != nil {
 		t.Errorf("Failed to unmarshal JSON: %v", err)
