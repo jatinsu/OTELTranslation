@@ -6,50 +6,6 @@ import (
 
 	"github.com/openshift/cluster-logging-operator/test/helpers/types"
 )
-
-// type Log struct {
-// 	Timestamp  string     `json:"@timestamp"`
-// 	File       string     `json:"file"`
-// 	Hostname   string     `json:"hostname"`
-// 	Kubernetes Kubernetes `json:"kubernetes"`
-// 	Level      string     `json:"level"`
-// 	LogType    string     `json:"log_type"`
-// 	Message    string     `json:"message"`
-// }
-
-// type Kubernetes struct {
-// 	Annotations     Annotations     `json:"annotations"`
-// 	ContainerId     string          `json:"container_id"`
-// 	ContainerImage  string          `json:"container_image"`
-// 	ContainerName   string          `json:"container_name"`
-// 	Labels          Labels          `json:"labels"`
-// 	NamespaceLabels NamespaceLabels `json:"namespace_labels"`
-// 	NamespaceName   string          `json:"namespace_name"`
-// 	PodId           string          `json:"pod_id"`
-// 	PodIp           string          `json:"pod_ip"`
-// 	PodName         string          `json:"pod_name"`
-// 	PodOwner 	  	string          `json:"pod_owner"`
-// }
-
-// type Annotations map[string]string
-
-// type Labels struct {
-// 	Apiserver                  string `json:"apiserver"`
-// 	App                        string `json:"app"`
-// 	OauthApiserverAntiAffinity string `json:"oauth-apiserver-anti-affinity"`
-// 	PodTemplateHash            string `json:"pod-template-hash"`
-// 	Revision                   string `json:"revision"`
-// }
-
-// type NamespaceLabels struct {
-// 	KubernetesIoMetadataName                            string `json:"kubernetes.io/metadata.name"`
-// 	OlmOperatorgroupUidD5ae8d2e99f34020998d9fc74c33faeb string `json:"olm.operatorgroup.uid/d5ae8d2e-99f3-4020-998d-9fc74c33faeb"`
-// 	OpenshiftIoClusterMonitoring                        string `json:"openshift.io/cluster-monitoring"`
-// 	PodSecurityKubernetesIoAudit                        string `json:"pod-security.kubernetes.io/audit"`
-// 	PodSecurityKubernetesIoEnforce                      string `json:"pod-security.kubernetes.io/enforce"`
-// 	PodSecurityKubernetesIoWarn                         string `json:"pod-security.kubernetes.io/warn"`
-// }
-
 // New json file
 type newLog struct {
 	Timestamp      string   `json:"timeUnixNano,omitempty"`
