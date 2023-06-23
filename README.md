@@ -5,17 +5,17 @@ A small Go Project to parse and translate ViaQ JSON log files into OTEL YAML fil
 ## Todo
 - [x] collector (made up, couldn't find equavalient)
 - [ ] EventData (skip for now)
-- [ ] Pipelinemetadata
-- [ ] openshiftmeta
+- [x] Pipelinemetadata (Similar to collector, so no equivalent)
+- [x] openshiftmeta (couldn't find equavalient)
 - [ ] appliecationlog (kinda?)
 - [ ] infracontainerlog (kinda?)
-- [ ] pipelinemetadata in viaqcommon
-- [ ] viaqindexname in viaqcommon
-- [ ] viaqmsgid in viaqcommon
-- [ ] openshift in viaqcommon
-- [ ] JournalLog
-- [ ] T struct
-- [ ] U struct
+- [x] pipelinemetadata in viaqcommon
+- [x] viaqindexname in viaqcommon (couldn't find equivelent, but found it in amazon sdk called index_name)
+- [x] viaqmsgid in viaqcommon
+- [x] openshift in viaqcommon
+- [x] JournalLog (couldn't find equivelent)
+- [x] T struct
+- [x] U struct
 - [ ] systemd struct
 - [ ] infralog
 - [ ] linuxauditlog
