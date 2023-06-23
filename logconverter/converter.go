@@ -10,25 +10,25 @@ import (
 
 // New json file
 type newLog struct {
-	Timestamp      string   `json:"timeUnixNano,omitempty"`
-	SeverityText   string   `json:"severityText,omitempty"`
-	SeverityNumber string   `json:"severityNumber,omitempty"`
-	Body           Body     `json:"body,omitempty"`
+	Timestamp           string              `json:"timeUnixNano,omitempty"`
+	SeverityText        string              `json:"severityText,omitempty"`
+	SeverityNumber      string              `json:"severityNumber,omitempty"`
+	Body                Body                `json:"body,omitempty"`
 	NewPipelinemetadata NewPipelinemetadata `json:"pipeline_metadata,omitempty"`
-	ViaqIndexName string   `json:"viaq_index_name,omitempty"`
-	ViaqMsgID    string   `json:"viaq_msg_id,omitempty"`
-	Openshift NewOpenshiftMeta `json:"openshift,omitempty"`
-	Resource       Resource `json:"resource,omitempty"`
+	ViaqIndexName       string              `json:"viaq_index_name,omitempty"`
+	ViaqMsgID           string              `json:"viaq_msg_id,omitempty"`
+	NewOpenshiftMeta    NewOpenshiftMeta    `json:"openshift,omitempty"`
+	Resource            Resource            `json:"resource,omitempty"`
 }
 type NewPipelinemetadata struct {
 	NewLogCollector NewLogCollector `json:"collector,omitempty"`
 }
 
 type NewLogCollector struct {
-	Ipaddr4 string `json:"ipaddr4,omitempty"`
-	Name    string `json:"name,omitempty"`
+	Ipaddr4    string `json:"ipaddr4,omitempty"`
+	Name       string `json:"name,omitempty"`
 	ReceivedAt string `json:"receivedAt,omitempty"`
-	Version string `json:"version,omitempty"`
+	Version    string `json:"version,omitempty"`
 }
 
 type Body struct {
@@ -37,20 +37,18 @@ type Body struct {
 
 // need to add to some other struct
 type NewOpenshiftMeta struct {
-
 	ClusterID string `json:"cluster_id,omitempty"`
 
 	OpenshiftLabels map[string]string `json:"labels,omitempty"`
-
 
 	Sequence string `json:"sequence,omitempty"`
 }
 
 type NewJournalLog struct {
-	newLog `json:",inline,omitempty"`
-	STREAMID            string  `json:"_STREAM_ID,omitempty"`
-	SYSTEMDINVOCATIONID string  `json:"_SYSTEMD_INVOCATION_ID,omitempty"`
-	NewSystemd             NewSystemd `json:"systemd,omitempty"`
+	newLog              `json:",inline,omitempty"`
+	STREAMID            string     `json:"_STREAM_ID,omitempty"`
+	SYSTEMDINVOCATIONID string     `json:"_SYSTEMD_INVOCATION_ID,omitempty"`
+	NewSystemd          NewSystemd `json:"systemd,omitempty"`
 }
 
 type NewT struct {
@@ -81,6 +79,22 @@ type NewSystemd struct {
 	U NewU `json:"u,omitempty"`
 }
 
+type NewInfraLog struct {
+	Docker              Docker              `json:"docker,omitempty"`
+	Kubernetes          Kubernetes          `json:"kubernetes,omitempty"`
+	Message             string              `json:"message,omitempty"`
+	Level               string              `json:"level,omitempty"`
+	Hostname            string              `json:"hostname,omitempty"`
+	PipelineMetadata    NewPipelinemetadata `json:"pipeline_metadata,omitempty"`
+	Timestamp           time.Time           `json:"@timestamp,omitempty"`
+	LogType             string              `json:"log_type,omitempty"`
+	ViaqIndexName       string              `json:"viaq_index_name,omitempty"`
+	ViaqMsgID           string              `json:"viaq_msg_id,omitempty"`
+	STREAMID            string              `json:"_STREAM_ID,omitempty"`
+	SYSTEMDINVOCATIONID string              `json:"_SYSTEMD_INVOCATION_ID,omitempty"`
+	Systemd             Systemd             `json:"systemd,omitempty"`
+	OpenshiftLabels     NewOpenshiftMeta    `json:"openshift,omitempty"`
+}
 
 type Resource struct {
 	TheLog     TheLog       `json:"log,omitempty"`
