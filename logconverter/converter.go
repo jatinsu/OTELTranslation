@@ -20,6 +20,12 @@ type newLog struct {
 	NewOpenshiftMeta    NewOpenshiftMeta    `json:"openshift,omitempty"`
 	Resource            Resource            `json:"resource,omitempty"`
 }
+
+type NewDocker struct {
+	// ContainerID is the id of the container producing the log
+	ContainerID string `json:"container_id"`
+}
+
 type NewPipelinemetadata struct {
 	NewLogCollector NewLogCollector `json:"collector,omitempty"`
 }
@@ -80,8 +86,8 @@ type NewSystemd struct {
 }
 
 type NewInfraLog struct {
-	Docker              Docker              `json:"docker,omitempty"`
-	Kubernetes          Kubernetes          `json:"kubernetes,omitempty"`
+	NewDocker           NewDocker           `json:"docker,omitempty"`
+	K8s                 K8s                 `json:"K8s,omitempty"`
 	Message             string              `json:"message,omitempty"`
 	Level               string              `json:"level,omitempty"`
 	Hostname            string              `json:"hostname,omitempty"`
@@ -92,7 +98,7 @@ type NewInfraLog struct {
 	ViaqMsgID           string              `json:"viaq_msg_id,omitempty"`
 	STREAMID            string              `json:"_STREAM_ID,omitempty"`
 	SYSTEMDINVOCATIONID string              `json:"_SYSTEMD_INVOCATION_ID,omitempty"`
-	NewSystemd             NewSystemd             `json:"systemd,omitempty"`
+	NewSystemd          NewSystemd          `json:"systemd,omitempty"`
 	OpenshiftLabels     NewOpenshiftMeta    `json:"openshift,omitempty"`
 }
 
@@ -155,6 +161,171 @@ type NewNamespaceLabels map[string]string
 type Attributes struct {
 	Key   string `json:"key,omitempty"`
 	Value string `json:"value,omitempty"`
+}
+
+type LinuxAuditLog struct {
+	Hostname         string              `json:"hostname"`
+	AuditLinux       AuditLinux          `json:"audit.linux"`
+	Message          string              `json:"message,omitempty"`
+	PipelineMetadata NewPipelinemetadata `json:"pipeline_metadata"`
+	Timestamp        time.Time           `json:"@timestamp"`
+	LogType          string              `json:"log_type,omitempty"`
+	ViaqIndexName    string              `json:"viaq_index_name"`
+	ViaqMsgID        string              `json:"viaq_msg_id"`
+	Kubernetes       K8s                 `json:"K8s"`
+	Openshift        NewOpenshiftMeta    `json:"openshift"`
+	Timing           string              `json:",inline"`
+	Level            string              `json:"level,omitempty"`
+}
+
+type AuditLinux struct {
+	Type     string `json:"type,omitempty"`
+	RecordID string `json:"record_id,omitempty"`
+}
+
+type OVNAuditLog struct {
+	Hostname            string              `json:"hostname"`
+	Message             string              `json:"message,omitempty"`
+	NewPipelinemetadata NewPipelinemetadata `json:"pipeline_metadata"`
+	Timestamp           time.Time           `json:"@timestamp"`
+	LogType             string              `json:"log_type,omitempty"`
+	ViaqIndexName       string              `json:"viaq_index_name"`
+	ViaqMsgID           string              `json:"viaq_msg_id"`
+	Kubernetes          K8s                 `json:"K8s"`
+	NewOpenshiftMeta    NewOpenshiftMeta    `json:"openshift"`
+	Level               string              `json:"level,omitempty"`
+}
+
+type AuditLogCommon struct {
+	Kind                     string              `json:"kind,omitempty"`
+	APIVersion               string              `json:"apiVersion,omitempty"`
+	Level                    string              `json:"level,omitempty"`
+	AuditID                  string              `json:"auditID,omitempty"`
+	Stage                    string              `json:"stage,omitempty"`
+	RequestURI               string              `json:"requestURI,omitempty"`
+	Verb                     string              `json:"verb,omitempty"`
+	User                     NewUser             `json:"user,omitempty"`
+	SourceIPs                []string            `json:"sourceIPs,omitempty"`
+	UserAgent                string              `json:"userAgent,omitempty"`
+	ObjectRef                NewObjectRef        `json:"objectRef,omitempty"`
+	ResponseStatus           NewResponseStatus   `json:"responseStatus,omitempty"`
+	RequestReceivedTimestamp time.Time           `json:"requestReceivedTimestamp,omitempty"`
+	StageTimestamp           time.Time           `json:"stageTimestamp,omitempty"`
+	NewAnnotations           NewAnnotations      `json:"annotations,omitempty"`
+	Message                  interface{}         `json:"message,omitempty"`
+	Hostname                 string              `json:"hostname,omitempty"`
+	NewPipelinemetadata      NewPipelinemetadata `json:"pipeline_metadata,omitempty"`
+	Timestamp                time.Time           `json:"@timestamp,omitempty"`
+	LogType                  string              `json:"log_type,omitempty"`
+	ViaqIndexName            string              `json:"viaq_index_name,omitempty"`
+	ViaqMsgID                string              `json:"viaq_msg_id,omitempty"`
+	Kubernetes               K8s                 `json:"K8s,omitempty"`
+	OpenshiftLabels          NewOpenshiftMeta    `json:"openshift,omitempty"`
+	Timing                   string              `json:",inline"`
+}
+
+type EventRouterLog struct {
+	NewDocker        NewDocker           `json:"docker"`
+	K8s              K8s                 `json:"K8s"`
+	Message          string              `json:"message,omitempty"`
+	Level            string              `json:"level"`
+	Hostname         string              `json:"hostname,omitempty"`
+	PipelineMetadata NewPipelinemetadata `json:"pipeline_metadata"`
+	Timestamp        time.Time           `json:"@timestamp"`
+	LogType          string              `json:"log_type,omitempty"`
+	ViaqIndexName    string              `json:"viaq_index_name"`
+	ViaqMsgID        string              `json:"viaq_msg_id"`
+	OpenshiftLabels  NewOpenshiftMeta    `json:"openshift"`
+	Timing           string              `json:",inline"`
+}
+
+type NewUser struct {
+	Username string   `json:"username,omitempty"`
+	UID      string   `json:"uid,omitempty"`
+	Groups   []string `json:"groups,omitempty"`
+}
+
+type NewObjectRef struct {
+	Resource        string `json:"resource,omitempty"`
+	ResourceVersion string `json:"resourceVersion,omitempty"`
+	Name            string `json:"name,omitempty"`
+	Namespace       string `json:"namespace,omitempty"`
+	APIGroup        string `json:"apiGroup,omitempty"`
+	APIVersion      string `json:"apiVersion,omitempty"`
+	UID             string `json:"uid,omitempty"`
+}
+
+type NewResponseStatus struct {
+	Code int `json:"code,omitempty"`
+}
+
+type NewAnnotationsK8s struct {
+	AuthorizationK8SIoDecision string `json:"authorization.k8s.io/decision"`
+	AuthorizationK8SIoReason   string `json:"authorization.k8s.io/reason"`
+}
+
+type NewOpenshiftAuditLog struct {
+	AuditLogCommon
+	OpenshiftAuditLevel string `json:"openshift_audit_level,omitempty"`
+}
+
+type NewK8sAuditLog struct {
+	AuditLogCommon
+	K8SAuditLevel string `json:"k8s_audit_level,omitempty"`
+}
+
+type AuditLog struct {
+	Hostname                 string              `json:"hostname,omitempty"`
+	AuditLinux               AuditLinux          `json:"audit.linux,omitempty"`
+	Message                  string              `json:"message,omitempty"`
+	PipelineMetadata         NewPipelinemetadata `json:"pipeline_metadata"`
+	Timestamp                time.Time           `json:"@timestamp,omitempty"`
+	Docker                   NewDocker           `json:"docker,omitempty"`
+	LogType                  string              `json:"log_type,omitempty"`
+	ViaqIndexName            string              `json:"viaq_index_name,omitempty"`
+	ViaqMsgID                string              `json:"viaq_msg_id,omitempty"`
+	Kubernetes               K8s                 `json:"K8s,omitempty"`
+	Kind                     string              `json:"kind,omitempty"`
+	APIVersion               string              `json:"apiVersion,omitempty"`
+	Level                    string              `json:"level,omitempty"`
+	AuditID                  string              `json:"auditID,omitempty"`
+	Stage                    string              `json:"stage,omitempty"`
+	RequestURI               string              `json:"requestURI,omitempty"`
+	Verb                     string              `json:"verb,omitempty"`
+	User                     NewUser             `json:"user,omitempty"`
+	SourceIPs                []string            `json:"sourceIPs,omitempty"`
+	UserAgent                string              `json:"userAgent,omitempty"`
+	ObjectRef                NewObjectRef        `json:"objectRef,omitempty"`
+	ResponseStatus           NewResponseStatus   `json:"responseStatus,omitempty"`
+	RequestReceivedTimestamp time.Time           `json:"requestReceivedTimestamp,omitempty"`
+	StageTimestamp           time.Time           `json:"stageTimestamp,omitempty"`
+	Annotations              NewAnnotationsK8s   `json:"annotations,omitempty"`
+	K8SAuditLevel            string              `json:"k8s_audit_level,omitempty"`
+	OpenshiftAuditLevel      string              `json:"openshift_audit_level,omitempty"`
+}
+
+type AllLog struct {
+	//ContainerLog             `json:",inline,omitempty"`
+	STREAMID                 string            `json:"_STREAM_ID,omitempty"`
+	SYSTEMDINVOCATIONID      string            `json:"_SYSTEMD_INVOCATION_ID,omitempty"`
+	Systemd                  NewSystemd        `json:"systemd,omitempty"`
+	AuditLinux               AuditLinux        `json:"audit.linux,omitempty"`
+	Kind                     string            `json:"kind,omitempty"`
+	APIVersion               string            `json:"apiVersion,omitempty"`
+	AuditID                  string            `json:"auditID,omitempty"`
+	Stage                    string            `json:"stage,omitempty"`
+	RequestURI               string            `json:"requestURI,omitempty"`
+	Verb                     string            `json:"verb,omitempty"`
+	User                     NewUser           `json:"user,omitempty"`
+	SourceIPs                []string          `json:"sourceIPs,omitempty"`
+	UserAgent                string            `json:"userAgent,omitempty"`
+	ObjectRef                NewObjectRef      `json:"objectRef,omitempty"`
+	ResponseStatus           NewResponseStatus `json:"responseStatus,omitempty"`
+	RequestReceivedTimestamp time.Time         `json:"requestReceivedTimestamp,omitempty"`
+	StageTimestamp           time.Time         `json:"stageTimestamp,omitempty"`
+	Annotations              NewAnnotationsK8s `json:"annotations,omitempty"`
+	K8SAuditLevel            string            `json:"k8s_audit_level,omitempty"`
+	OpenshiftAuditLevel      string            `json:"openshift_audit_level,omitempty"`
 }
 
 func ConvertLog(log types.ContainerLog) newLog {

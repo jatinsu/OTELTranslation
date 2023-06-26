@@ -16,18 +16,18 @@ A small Go Project to parse and translate ViaQ JSON log files into OTEL YAML fil
 - [x] JournalLog (couldn't find equivelent)
 - [x] T struct (couldn't find equivelent)
 - [x] U struct (couldn't find equivelent)
-- [x] systemd struct
-- [ ] infralog
-- [ ] linuxauditlog
-- [ ] AuditLinux
-- [ ] OVNAuditLog
-- [ ] AuditLogCommon
-- [ ] EventRouterLog
-- [ ] User
-- [ ] ObjectRef
-- [ ] ResponseStatus
-- [ ] Annotations
-- [ ] OpenshiftAuditLog
-- [ ] K8sAuditLog
-- [ ] AuditLog
-- [ ] AllLog
+- [x] systemd struct (couldn't find equivelent)
+- [x] infralog (couldn't find equivelent)
+- [x] linuxauditlog (couldn't find equivelent)
+- [x] AuditLinux (couldn't find equivelent)
+- [x] OVNAuditLog (couldn't find equivelent)
+- [x] AuditLogCommon (couldn't find equivelent)
+- [x] EventRouterLog (couldn't find equivelent)
+- [x] User (couldn't find equivelent)
+- [x] ObjectRef (couldn't find equivelent)
+- [x] ResponseStatus (couldn't find equivelent)
+- [x] Annotations (couldn't find equivelent)
+- [x] OpenshiftAuditLog
+- [x] K8sAuditLog
+- [x] AuditLog
+- [x] AllLog
