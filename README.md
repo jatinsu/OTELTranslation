@@ -3,18 +3,18 @@
 A small Go Project to parse and translate ViaQ JSON log files into OTEL YAML files.
 
 ## Todo
-- [x] collector (made up, couldn't find equavalient)
-- [ ] EventData (skip for now)
-- [x] Pipelinemetadata (Similar to collector, so no equivalent)
-- [x] openshiftmeta (couldn't find equavalient)
+- [x] collector (made up, couldn't find equavalient) [pipeline] DONE
+- [ ] EventData (skip for now) 
+- [x] Pipelinemetadata (Similar to collector, so no equivalent) 
+- [x] openshiftmeta (couldn't find equavalient) DONE
 - [ ] appliecationlog (kinda?)
 - [ ] infracontainerlog (kinda?)
-- [x] pipelinemetadata in viaqcommon
-- [x] viaqindexname in viaqcommon (couldn't find equivelent, but found it in amazon sdk called index_name)
-- [x] viaqmsgid in viaqcommon
-- [x] openshift in viaqcommon
-- [x] JournalLog (couldn't find equivelent)
-- [x] T struct (couldn't find equivelent)
+- [x] pipelinemetadata in viaqcommon DONE
+- [x] viaqindexname in viaqcommon (couldn't find equivelent, but found it in amazon sdk called index_name) DONE
+- [x] viaqmsgid in viaqcommon DONE
+- [x] openshift in viaqcommon DONE
+- [x] JournalLog (couldn't find equivelent) cant insert it without since it's can't call newLog, maybe structured code wrong
+- [x] T struct (couldn't find equivelent) 
 - [x] U struct (couldn't find equivelent)
 - [x] systemd struct (couldn't find equivelent)
 - [x] infralog (couldn't find equivelent)

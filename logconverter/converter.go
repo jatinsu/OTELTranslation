@@ -19,6 +19,7 @@ type newLog struct {
 	ViaqMsgID           string              `json:"viaq_msg_id,omitempty"`
 	NewOpenshiftMeta    NewOpenshiftMeta    `json:"openshift,omitempty"`
 	Resource            Resource            `json:"resource,omitempty"`
+	NewInfraLog         NewInfraLog         `json:"infra,omitempty"`
 }
 
 type NewDocker struct {
@@ -333,8 +334,23 @@ func ConvertLog(log types.ContainerLog) newLog {
 		Timestamp:      changeTime(log.ViaQCommon.Timestamp),
 		SeverityText:   log.ViaQCommon.Level,
 		SeverityNumber: severityTextToNumber(log.ViaQCommon.Level),
+		NewPipelinemetadata: NewPipelinemetadata{
+			NewLogCollector: NewLogCollector{
+				Ipaddr4:    log.ViaQCommon.PipelineMetadata.Collector.Ipaddr4,
+				Name:       log.ViaQCommon.PipelineMetadata.Collector.Name,
+				ReceivedAt: convertTimeToString(log.ViaQCommon.PipelineMetadata.Collector.ReceivedAt),
+				Version:    log.ViaQCommon.PipelineMetadata.Collector.Version,
+			},
+		},
 		Body: Body{
 			Stringvalue: log.ViaQCommon.Message,
+		},
+		ViaqIndexName: log.ViaQCommon.ViaqIndexName,
+		ViaqMsgID:     log.ViaQCommon.ViaqMsgID,
+		NewOpenshiftMeta: NewOpenshiftMeta{
+			ClusterID:       log.ViaQCommon.Openshift.ClusterID,
+			OpenshiftLabels: log.ViaQCommon.Openshift.Labels,
+			Sequence:        string(log.ViaQCommon.Openshift.Sequence),
 		},
 		Resource: Resource{
 			TheLog: TheLog{
@@ -394,6 +410,11 @@ func imageSpliceBefore(oldImage string) string {
 func imageSplice(oldImage string) string {
 	newImage := oldImage[strings.Index(oldImage, ":"):]
 	return newImage
+}
+
+func convertTimeToString(oldTime time.Time) string {
+	formattedTime := oldTime.Format("2006-01-02T15:04:05.999999999Z")
+	return formattedTime
 }
 
 func severityTextToNumber(severityText string) string {
