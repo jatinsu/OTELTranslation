@@ -92,7 +92,7 @@ type NewInfraLog struct {
 	ViaqMsgID           string              `json:"viaq_msg_id,omitempty"`
 	STREAMID            string              `json:"_STREAM_ID,omitempty"`
 	SYSTEMDINVOCATIONID string              `json:"_SYSTEMD_INVOCATION_ID,omitempty"`
-	Systemd             Systemd             `json:"systemd,omitempty"`
+	NewSystemd             NewSystemd             `json:"systemd,omitempty"`
 	OpenshiftLabels     NewOpenshiftMeta    `json:"openshift,omitempty"`
 }
 

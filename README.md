@@ -16,7 +16,7 @@ A small Go Project to parse and translate ViaQ JSON log files into OTEL YAML fil
 - [x] JournalLog (couldn't find equivelent)
 - [x] T struct (couldn't find equivelent)
 - [x] U struct (couldn't find equivelent)
-- [ ] systemd struct
+- [x] systemd struct
 - [ ] infralog
 - [ ] linuxauditlog
 - [ ] AuditLinux
