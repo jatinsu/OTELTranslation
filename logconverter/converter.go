@@ -21,6 +21,7 @@ type newLog struct {
 	Resource            Resource            `json:"resource,omitempty"`
 	NewInfraLog         NewInfraLog         `json:"infra,omitempty"`
 	NewSystemd          NewSystemd          `json:"systemd,omitempty"`
+	LinuxAuditLog       `json:",inline,omitempty"`
 }
 
 type NewDocker struct {
@@ -373,7 +374,7 @@ func ConvertLog(log types.ContainerLog) newLog {
 					NewNamespaceLabels: NewNamespaceLabels(log.Kubernetes.NamespaceLabels),
 				},
 			},
-		},
+		},	
 		Resource: Resource{
 			TheLog: TheLog{
 				// TheFile: TheFile{

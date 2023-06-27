@@ -116,5 +116,13 @@
     "systemd": {
         "t": {},
         "u": {}
-    }
+    },
+    "hostname": "",
+    "audit.linux": {},
+    "@timestamp": "0001-01-01T00:00:00Z",
+    "K8s": {
+        "pod": {},
+        "namespace": {}
+    },
+    "Timing": ""
 }
