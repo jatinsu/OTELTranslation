@@ -65,5 +65,56 @@
                 "value": "infrastructure"
             }
         ]
+    },
+    "infra": {
+        "docker": {
+            "container_id": ""
+        },
+        "K8s": {
+            "pod": {
+                "name": "apiserver-b477bc494-hmj4r",
+                "uid": "998cef46-bccd-437e-9727-4d6389436885",
+                "ip": "10.128.0.33",
+                "annotations": {
+                    "k8s.ovn.org/pod-networks": "{\"default\":{\"ip_addresses\":[\"10.128.0.33/23\"],\"mac_address\":\"0a:58:0a:80:00:21\",\"gateway_ips\":[\"10.128.0.1\"],\"ip_address\":\"10.128.0.33/23\",\"gateway_ip\":\"10.128.0.1\"}}",
+                    "k8s.v1.cni.cncf.io/network-status": "[{\n    \"name\": \"ovn-kubernetes\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.128.0.33\"\n    ],\n    \"mac\": \"0a:58:0a:80:00:21\",\n    \"default\": true,\n    \"dns\": {}\n}]",
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"ovn-kubernetes\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.128.0.33\"\n    ],\n    \"mac\": \"0a:58:0a:80:00:21\",\n    \"default\": true,\n    \"dns\": {}\n}]",
+                    "openshift.io/scc": "privileged",
+                    "operator.openshift.io/dep-openshift-oauth-apiserver.etcd-client.secret": "OFllOQ==",
+                    "operator.openshift.io/dep-openshift-oauth-apiserver.etcd-serving-ca.configmap": "f1B6eQ=="
+                },
+                "labels": {
+                    "apiserver": "true",
+                    "app": "openshift-oauth-apiserver",
+                    "oauth-apiserver-anti-affinity": "true",
+                    "pod-template-hash": "b477bc494",
+                    "revision": "2"
+                }
+            },
+            "namespace": {
+                "name": "openshift-oauth-apiserver",
+                "labels": {
+                    "kubernetes.io/metadata.name": "openshift-oauth-apiserver",
+                    "olm.operatorgroup.uid/d5ae8d2e-99f3-4020-998d-9fc74c33faeb": "",
+                    "openshift.io/cluster-monitoring": "true",
+                    "pod-security.kubernetes.io/audit": "privileged",
+                    "pod-security.kubernetes.io/enforce": "privileged",
+                    "pod-security.kubernetes.io/warn": "privileged"
+                }
+            }
+        },
+        "pipeline_metadata": {
+            "collector": {}
+        },
+        "@timestamp": "0001-01-01T00:00:00Z",
+        "systemd": {
+            "t": {},
+            "u": {}
+        },
+        "openshift": {}
+    },
+    "systemd": {
+        "t": {},
+        "u": {}
     }
 }

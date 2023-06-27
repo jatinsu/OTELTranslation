@@ -20,6 +20,7 @@ type newLog struct {
 	NewOpenshiftMeta    NewOpenshiftMeta    `json:"openshift,omitempty"`
 	Resource            Resource            `json:"resource,omitempty"`
 	NewInfraLog         NewInfraLog         `json:"infra,omitempty"`
+	NewSystemd          NewSystemd          `json:"systemd,omitempty"`
 }
 
 type NewDocker struct {
@@ -351,6 +352,27 @@ func ConvertLog(log types.ContainerLog) newLog {
 			ClusterID:       log.ViaQCommon.Openshift.ClusterID,
 			OpenshiftLabels: log.ViaQCommon.Openshift.Labels,
 			Sequence:        string(log.ViaQCommon.Openshift.Sequence),
+		},
+		NewInfraLog: NewInfraLog{
+			NewDocker: NewDocker{
+				ContainerID: log.Docker.ContainerID,
+			},
+			K8s: K8s{
+				Pod: Pod{
+					Name:           log.Kubernetes.PodName,
+					Uid:            log.Kubernetes.PodID,
+					Ip:             log.Kubernetes.PodIP,
+					Owner:          log.Kubernetes.Host,
+					NewAnnotations: NewAnnotations(log.Kubernetes.Annotations),
+					// THIS
+					K8sLabels: K8sLabels(log.Kubernetes.Labels),
+				},
+				Namespace: Namespace{
+					Name: log.Kubernetes.NamespaceName,
+					// THIS
+					NewNamespaceLabels: NewNamespaceLabels(log.Kubernetes.NamespaceLabels),
+				},
+			},
 		},
 		Resource: Resource{
 			TheLog: TheLog{
