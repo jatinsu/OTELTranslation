@@ -1,5 +1,22 @@
 # Translating Viaq logs to JSON
 
+
+Questions:
+- Is the change time function fine
+- Ask about severityTextToNumber
+- There's no File line in types.go
+- Should the key be hidden if it doesn't exist (would have to make it a pointer then)
+- Changed Sequence string `json:"sequence,omitempty"` from OptionalInt
+- applicationlog
+- infracontainerlog
+- changed Timing in Linux audit log into a string, is that okay
+- There's 2 different Annotations, New annotations and kuberenetes annotations
+- Should I format AuditLogcomomn exactly like k8s
+- containerlog in AllLog, should the entire format be the same exact as types.go or should it be like how it was before
+    
+    
+
+
 NOTE: the OTEL data model definitions are being moved from https://opentelemetry.io/docs to separate repos:
 - https://github.com/open-telemetry/opentelemetry-specification
 - https://github.com/open-telemetry/semantic-conventions
@@ -85,22 +102,5 @@ List of things missing in types.go
 					// 	PodSecurityKubernetesIoWarn:                         log.Kubernetes.NamespaceLabels.PodSecurityKubernetesIoWarn,
 					// },
 					
-
-
-
-Questions:
-    Is the change time function fine
-    Ask about severityTextToNumber
-    There's no File line in types.go
-    Should the key be hidden if it doesn't exist (would have to make it a pointer then)
-    Changed Sequence string `json:"sequence,omitempty"` from OptionalInt
-    applicationlog
-    infracontainerlog
-    changed Timing in Linux audit log into a string, is that okay
-    There's 2 different Annotations, New annotations and kuberenetes annotations
-    Should I format AuditLogcomomn exactly like k8s
-    containerlog in AllLog, should the entire format be the same exact as types.go or should it be like how it was before
-    
-    
     
     
