@@ -1,0 +1,14 @@
+# Vector config for tests that read from stdin and print filtered events to stdout
+
+[sources.in]
+type = "stdin"
+
+[transforms.modify]
+inputs = ["in"]
+type="remap"
+file = "modify.vrl"
+
+[sinks.out]
+inputs = ["modify"]
+type = "console"
+encoding.codec = "text"
