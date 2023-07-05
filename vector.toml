@@ -1,14 +1,12 @@
-# Vector config for tests that read from stdin and print filtered events to stdout
-
 [sources.in]
 type = "file"
-include = ["/Users/jatinsuri/VScode/otel-translation/vector_data/viaq.json"]
+include = ["/Users/jatinsuri/VScode/otel-translation/vector_data/test.json"]
 data_dir = "/Users/jatinsuri/VScode/otel-translation/vector_data"
 
 [transforms.modify]
 inputs = ["in"]
 type="remap"
-file = "modify.vrl"
+file = "/Users/jatinsuri/VScode/otel-translation/modify.vrl"
 
 [sinks.out]
 inputs = ["modify"]
