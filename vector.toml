@@ -1,7 +1,9 @@
 # Vector config for tests that read from stdin and print filtered events to stdout
 
 [sources.in]
-type = "stdin"
+type = "file"
+include = ["/Users/jatinsuri/VScode/otel-translation/vector_data/viaq.json"]
+data_dir = "/Users/jatinsuri/VScode/otel-translation/vector_data"
 
 [transforms.modify]
 inputs = ["in"]
@@ -10,5 +12,6 @@ file = "modify.vrl"
 
 [sinks.out]
 inputs = ["modify"]
-type = "console"
+type = "file"
+path = "/Users/jatinsuri/VScode/otel-translation/vector_data/modified.json"
 encoding.codec = "text"
