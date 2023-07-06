@@ -43,5 +43,18 @@ event.resources.container.image.name = container_image_slice[0]
 event.resources.container.image.tag = container_image_slice[1]
 del(event.kubernetes.container_image)
 
+#kubernetes
+event.resources.k8s.pod.name = del(event.kubernetes.pod_name)
+event.resources.k8s.pod.uid = del(event.kubernetes.pod_id)
+event.resources.k8s.pod.ip = del(event.kubernetes.pod_ip)
+event.resources.k8s.pod.owner = del(event.kubernetes.pod_owner)
+event.resources.k8s.pod.annotations = del(event.kubernetes.annotations)
+event.resources.k8s.pod.labels = del(event.kubernetes.labels)
 
+event.resources.k8s.namespace.name = event.kubernetes.namespace_labels."kubernetes.io/metadata.name"
+event.resources.k8s.namespace.labels = del(event.kubernetes.namespace_labels)
+event.resources.attributes.key = "log_type"
+event.resources.attributes.value = del(event.kubernetes.log_type)
+
+del(event.kubernetes)
 .message = event
