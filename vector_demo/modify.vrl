@@ -28,7 +28,20 @@ if event.severityText == "trace"{
 }
 
 
-event.resources.logs.file.path = del(event.file)
-event.timeUnixNano = del(event.@timestamp)
 event.body.stringValue = del(event.message)
+event.timeUnixNano = del(event.@timestamp)
+
+# resources
+event.resources.logs.file.path = del(event.file)
+event.resources.host.name= del(event.hostname)
+event.resources.container.name = del(event.kubernetes.container_name)
+event.resources.container.id = del(event.kubernetes.container_id)
+
+# split image name and tag into separate fields
+container_image_slice = split!(event.kubernetes.container_image, ":", limit: 2)
+event.resources.container.image.name = container_image_slice[0]
+event.resources.container.image.tag = container_image_slice[1]
+del(event.kubernetes.container_image)
+
+
 .message = event

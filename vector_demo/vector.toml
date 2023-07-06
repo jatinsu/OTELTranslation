@@ -3,7 +3,7 @@ data_dir = "vector_data"
 
 [sources.in]
 type = "file"
-include = [ "test.json" ]
+include = [ "viaq.json" ]
 
 [transforms.modify]
 inputs = ["in"]
