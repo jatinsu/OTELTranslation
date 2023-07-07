@@ -23,12 +23,9 @@ func main() {
 		return
 	}
 
-	formattedJSON, err := json.MarshalIndent(jsonData, "", "  ")
-	if err != nil {
-		fmt.Printf("Failed to format JSON: %v\n", err)
-		return
-	}
+	// actually format the json
+	formattedJSON, _ := json.MarshalIndent(jsonData, "", "  ")
 
-	// Print the formatted JSON
-	fmt.Println(string(formattedJSON))
+	// this puts the json into the file new.json
+	err = ioutil.WriteFile("new.json", formattedJSON, 0644)
 }

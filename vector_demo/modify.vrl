@@ -5,6 +5,7 @@ event.@timestamp = to_unix_timestamp(to_timestamp!(event.@timestamp))
 event.severityText = del(event.level)
 
 
+# Convert syslog severity to number, default to 9 (unknown)
 if event.severityText == "trace"{
     event.severityNumber = "8"
 }else if event.severityText == "debug"{
