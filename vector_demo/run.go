@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-	// Specify the path to the shell script file
+
 	scriptPath := "runme.sh"
 
-	// Check if the script file exists
+	// Checks if the script file exists
 	_, err := os.Stat(scriptPath)
 	if os.IsNotExist(err) {
 		log.Fatalf("Script file does not exist: %s", scriptPath)
@@ -23,10 +23,8 @@ func main() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	// Run the command
 	err = cmd.Run()
 	if err != nil {
 		log.Fatalf("Failed to run script: %v", err)
 	}
 }
- 

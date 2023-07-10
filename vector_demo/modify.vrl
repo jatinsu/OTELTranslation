@@ -1,4 +1,3 @@
-# If input is a JSON object, add a field { "hello": "world" }
 event = parse_json!(to_string!(.message))
 event.@timestamp = to_unix_timestamp(to_timestamp!(event.@timestamp))
 

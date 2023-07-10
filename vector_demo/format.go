@@ -8,14 +8,13 @@ import (
 
 func main() {
 	// Read the JSON file
-	filePath := "new.json" // Replace with your JSON file path
+	filePath := "new.json"
 	jsonBytes, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("Failed to read the JSON file: %v\n", err)
 		return
 	}
 
-	// Format the JSON
 	var jsonData interface{}
 	err = json.Unmarshal(jsonBytes, &jsonData)
 	if err != nil {
