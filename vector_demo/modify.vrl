@@ -1,0 +1,65 @@
+event = parse_json!(to_string!(.message))
+event.@timestamp = to_unix_timestamp(to_timestamp!(event.@timestamp))
+
+event.severityText = del(event.level)
+
+
+# Convert syslog severity to number, default to 9 (unknown)
+if event.severityText == "trace"{
+    event.severityNumber = "8"
+}else if event.severityText == "debug"{
+    event.severityNumber = "7"
+}else if event.severityText == "info"{
+    event.severityNumber = "6"
+}else if event.severityText == "notice"{
+    event.severityNumber = "5"
+}else if event.severityText == "warn"{
+    event.severityNumber = "4"
+}else if event.severityText == "err"{
+    event.severityNumber = "3"
+}else if event.severityText == "crit"{
+    event.severityNumber = "2"
+}else if event.severityText == "alert"{
+    event.severityNumber = "1"
+}else if event.severityText == "emerg"{
+    event.severityNumber = "0"
+}else{
+    event.severityNumber = "9"
+}
+
+
+event.body.stringValue = del(event.message)
+event.timeUnixNano = del(event.@timestamp)
+
+# resources
+event.resources.logs.file.path = del(event.file)
+event.resources.host.name= del(event.hostname)
+event.resources.container.name = del(event.kubernetes.container_name)
+event.resources.container.id = del(event.kubernetes.container_id)
+
+# split image name and tag into separate fields
+container_image_slice = split!(event.kubernetes.container_image, ":", limit: 2)
+event.resources.container.image.name = container_image_slice[0]
+event.resources.container.image.tag = container_image_slice[1]
+del(event.kubernetes.container_image)
+
+#kubernetes
+event.resources.k8s.pod.name = del(event.kubernetes.pod_name)
+event.resources.k8s.pod.uid = del(event.kubernetes.pod_id)
+event.resources.k8s.pod.ip = del(event.kubernetes.pod_ip)
+event.resources.k8s.pod.owner = del(event.kubernetes.pod_owner)
+event.resources.k8s.pod.annotations = del(event.kubernetes.annotations)
+event.resources.k8s.pod.labels = del(event.kubernetes.labels)
+
+event.resources.k8s.namespace.name = event.kubernetes.namespace_labels."kubernetes.io/metadata.name"
+event.resources.k8s.namespace.labels = del(event.kubernetes.namespace_labels)
+event.resources.attributes.key = "log_type"
+event.resources.attributes.value = del(event.kubernetes.log_type)
+del(event.kubernetes)
+
+
+
+
+
+
+.message = event

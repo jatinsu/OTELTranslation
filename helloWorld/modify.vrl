@@ -1,0 +1,5 @@
+# If input is a JSON object, add a field { "hello": "world" }
+# how to run: echo '{ "foo": "bar" }' | vector -c ./vector.toml
+event = parse_json!(to_string!(.message))
+event.hello="world"
+.message = event
