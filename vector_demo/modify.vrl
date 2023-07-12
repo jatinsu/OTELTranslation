@@ -54,9 +54,9 @@ event.resources.k8s.pod.labels = del(event.kubernetes.labels)
 event.resources.k8s.namespace.name = event.kubernetes.namespace_labels."kubernetes.io/metadata.name"
 event.resources.k8s.namespace.labels = del(event.kubernetes.namespace_labels)
 event.resources.attributes.key = "log_type"
-event.resources.attributes.value = del(event.kubernetes.log_type)
-del(event.kubernetes)
+event.resources.attributes.value = del(event.log_type)
 
+del(event.kubernetes)
 
 
 
