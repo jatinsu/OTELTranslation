@@ -1,5 +1,4 @@
 #!/bin/bash
-# Local Vector/VRL demo
 set -x
 rm -rf vector_data
 rm new.json
