@@ -4,10 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"time"
 )
 
-func format() {
+func main() {
 	// Read the JSON file
 	filePath := "new.json"
 	jsonBytes, err := ioutil.ReadFile(filePath)
@@ -28,14 +27,4 @@ func format() {
 
 	// this puts the json into the file new.json
 	err = ioutil.WriteFile("new.json", formattedJSON, 0644)
-}
-
-func main() {
-	counter:=0
-
-	for counter < 100000 {
-		time.Sleep(2 * time.Second)	
-		counter++
-		format()
-	}
 }

@@ -1,5 +1,5 @@
 event = parse_json!(to_string!(.message))
-event.@timestamp = to_unix_timestamp(to_timestamp!(event.@timestamp))
+event.timeUnixNano = to_unix_timestamp(to_timestamp!(del(event.@timestamp)))
 
 event.severityText = del(event.level)
 
@@ -29,7 +29,6 @@ if event.severityText == "trace"{
 
 
 event.body.stringValue = del(event.message)
-event.timeUnixNano = del(event.@timestamp)
 
 # resources
 event.resources.logs.file.path = del(event.file)

@@ -1,9 +1,24 @@
 # Vector config for tests that read from stdin and print filtered events to stdout
-data_dir = "vector_data"
+# data_dir = "vector_data"
+
+# [sources.in]
+# type = "file"
+# include = [ "viaq.json" ]
+
+# [transforms.modify]
+# inputs = ["in"]
+# type="remap"
+# file = "modify.vrl"
+
+# [sinks.out]
+# inputs = ["modify"]
+# type = "file"
+# path = "new.json"
+# encoding.codec = "text"
+
 
 [sources.in]
-type = "file"
-include = [ "viaq.json" ]
+type = "stdin"
 
 [transforms.modify]
 inputs = ["in"]
