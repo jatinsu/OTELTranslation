@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	scriptPath := "runme.sh"
+	scriptPath := "./runme.sh"
 
 	// Checks if the script file exists
 	_, err := os.Stat(scriptPath)

@@ -8,7 +8,7 @@ import (
 
 func main() {
 	// Read the JSON file
-	filePath := "new.json"
+	filePath := "./logs/new.json"
 	jsonBytes, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("Failed to read the JSON file: %v\n", err)
@@ -26,5 +26,5 @@ func main() {
 	formattedJSON, _ := json.MarshalIndent(jsonData, "", "  ")
 
 	// this puts the json into the file new.json
-	err = ioutil.WriteFile("new.json", formattedJSON, 0644)
+	err = ioutil.WriteFile("./logs/new.json", formattedJSON, 0644)
 }
