@@ -1,3 +1,4 @@
+// format the json file to make it readable
 package main
 
 import (

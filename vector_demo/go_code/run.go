@@ -1,3 +1,4 @@
+// not really useful anymore, just use runme.sh since this literally just runs runme.sh
 package main
 
 import (
